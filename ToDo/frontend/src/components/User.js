@@ -1,7 +1,4 @@
-import React from "react";
-
-
-const UserItem = ({user}) => {
+const UserItem = ({ user }) => {
     return (
         <tr>
             <td>username</td>
@@ -13,15 +10,15 @@ const UserItem = ({user}) => {
 }
 
 
-const UserList = ({users}) => {
+const UserList = ({ users }) => {
     return (
-        <div className = 'grid content'>
+        <div className='grid content'>
             <table className="table">
                 <th>User name</th>
                 <th>First name</th>
                 <th>Last name</th>
                 <th className="lastTh">Email</th>
-                {users.map((user_) => <UserItem user={user_}/>)}
+                {users.map((user_) => <UserItem user={user_} />)}
             </table>
         </div>
     )

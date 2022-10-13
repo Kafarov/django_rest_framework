@@ -1,38 +1,28 @@
 import './App.css';
 import React from 'react';
-import UserList from './components/User';
-import axios from 'axios'
-import MenuList from './components/Menu';
-import Footer from './components/Footer';
+import { Route, Routes } from "react-router-dom";
+
+import {Layout} from './components/Layout';
+import Userpage from './pages/Userpage'
+import Todopage from './pages/Todopage';
+import Projectpage from './pages/Projectpage';
 
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      'users': []
-    }
-  }
+function App() {
+  return (
+    <>
+      <Routes>
+        <Route path='/' element={<Layout />}>
+          <Route index element={<Userpage />} />
+          <Route path='/Todo' element={<Todopage />} />
+          <Route path='/Project' element={<Projectpage />} />
+        </Route>
+      </Routes>
+    </>
+  )
 
-  componentDidMount() {
 
-      axios.get('http://127.0.0.1:8000/users/').then(response => {
-
-        this.setState({
-          'users': response.data
-        })
-      }).catch(error => console.log(error))
-  }
-
-  render() {
-    return (
-      <div>
-        <MenuList/>
-        <UserList users={this.state.users} />
-        <Footer/>
-      </div>
-    );
-  }
 }
+ 
 
 export default App;
