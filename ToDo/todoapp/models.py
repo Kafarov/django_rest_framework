@@ -22,8 +22,8 @@ class Project(models.Model):
 
 class ToDo(models.Model):
     
-    project = models.OneToOneField(Project, on_delete=models.CASCADE)
-    created_user = models.OneToOneField(User, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    created_user = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField(
         blank=True,
         null=True,
