@@ -15,7 +15,7 @@ class ProjectLimitOffsetPagination(LimitOffsetPagination):
 
 
 class TodoLimitOffsetPagination(LimitOffsetPagination):
-    default_limit = 20
+    default_limit = 3
 
 
 class ProjectModelViewSet(ModelViewSet):
@@ -31,6 +31,7 @@ class ToDoModelViewSet(ModelViewSet):
     serializer_class = ToDoModelSerializer
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_fields = ['project']
+    pagination_class = TodoLimitOffsetPagination
     
     def destroy(self, request, *args, **kwargs):
         pk = kwargs.get('pk', None)

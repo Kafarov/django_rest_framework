@@ -35,3 +35,4 @@ class ToDo(models.Model):
         auto_now=True, verbose_name="Edited", editable=False
     )
     status = models.BooleanField(default=True)
+    

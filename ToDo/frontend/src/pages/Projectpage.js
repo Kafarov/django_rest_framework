@@ -1,36 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios';
+import {Pagination, Container} from '@mui/material'
+
 import ProjectList from "../components/Project";
 
 
+const BASE_URL = 'http://127.0.0.1:8000/project/?'
 
-class Projectpage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      'project': []
-    }
-  }
 
-  componentDidMount() {
+function Projectpage() {
+  const [page, setPage] = useState(1);
+  const [pageQty, setPageQty] = useState(0);
+  const [projects, setProjects] = useState([]);
+  const [pageLimit, setPageLimit] = useState(3);
 
-      axios.get('http://127.0.0.1:8000/project/').then(response => {
+  useEffect(() => {
+    axios.get(BASE_URL + `limit=${pageLimit}&offset=${(page - 1)*pageLimit}`).then(
+      ({data}) => {
+        console.log(data)
+        setPageQty(Math.ceil(data.count / pageLimit))
+        setProjects(data.results)
+        console.log(projects)
+        console.log(pageQty)
+      }
+    )
+  },[page,])
 
-        this.setState({
-          'project': response.data
-        })
-      }).catch(error => console.log(error))
-  }
+  return(
+    <siv>
+      <Container>
+        {pageQty >= 2 && (
+        <Pagination
+          count={pageQty}
+          page={page}
+          onChange={(_, num) => setPage(num)}
 
-  render() {
-    return (
-      <div>
-        <ProjectList project={this.state.project} />
-      </div>
-    );
-  }
+          sx={{marginX: 'auto'}}
+        />)
+        }
+        </Container>
+      <ProjectList project={projects} />
+    </siv>
+  )
 }
-
-
 
 export default Projectpage;
